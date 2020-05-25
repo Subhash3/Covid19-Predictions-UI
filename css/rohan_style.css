@@ -34,23 +34,27 @@ body{
     position: relative;
     display: flex;
     flex-direction: row;
-    height: 130vh;
+    /* height: 140vh; */
+    margin: 10px;
 }
 
 .map-and-graphs .map{
     position: relative;
-    width: 50%;
-    border: 1px solid orange;
+    width: 55%;
+    margin-left: 20px;
 }
 
 .map-and-graphs .graphs{
     position: relative;
-    width: 50%;
-    border: 1px solid orange;
+    margin-left: 10%;
+    width: 45%;
+    margin: 10px;
 }
-.mapdiv {
+
+/* .mpadiv { */
+.mapdiv path{
     fill: #ffeeee;
-    stroke: #ff9999;
+    stroke: #a85f5f;
     stroke-width: 1px;
     transition: fill 0.3s;
 }
@@ -61,6 +65,9 @@ body{
     stroke-width: 2px;
 }
 
+.mapdiv a{
+    text-decoration: none;
+}
 
 .backbtn {
     text-decoration: none;
@@ -69,4 +76,27 @@ body{
     text-align: center;
     background-color: #333;
     color: white;
+}
+
+.states-list{
+    display: flex;
+    flex-direction:column;
+}
+
+.states-list .states .districts{
+    display: flex;
+    flex-direction:column;
+}
+
+@media screen and (max-width: 480px) {
+    body{
+        background: greenyellow;
+    }
+    .map-and-graphs {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        /* height: 140vh; */
+        margin: 10px;
+    }
 }
