@@ -1,0 +1,72 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    outline: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    font-family: "Lato", sans-serif;
+    color: #333;
+    font-size: 40px;
+    /* border: 1px solid black; */
+}
+
+.subheader {
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+    font-family: "Lato", sans-serif;
+    color: #333;
+    font-size: 20px;
+    /* border-bottom: 1px solid black; */
+}
+
+.map-and-graphs {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 130vh;
+}
+
+.map-and-graphs .map{
+    position: relative;
+    width: 50%;
+    border: 1px solid orange;
+}
+
+.map-and-graphs .graphs{
+    position: relative;
+    width: 50%;
+    border: 1px solid orange;
+}
+.mapdiv {
+    fill: #ffeeee;
+    stroke: #ff9999;
+    stroke-width: 1px;
+    transition: fill 0.3s;
+}
+
+.mapdiv path:hover {
+    fill: #ffaaaa;
+    stroke: #ff1111; 
+    stroke-width: 2px;
+}
+
+
+.backbtn {
+    text-decoration: none;
+    padding: 20px;
+    width: 50%;
+    text-align: center;
+    background-color: #333;
+    color: white;
+}

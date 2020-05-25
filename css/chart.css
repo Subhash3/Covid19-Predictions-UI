@@ -1,0 +1,16 @@
+    /* body {
+        background-color: black;
+    } */
+
+    .chart {
+        background-color: white;
+        border-radius: 8px;
+        margin: 2% 0%;
+    }
+
+    .chartdiv {
+        width: 800px;
+        /* background-color: rgb(240, 236, 236); */
+        border-radius: 4px;
+        padding: 4%;
+    }
