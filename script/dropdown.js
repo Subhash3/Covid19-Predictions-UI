@@ -1,5 +1,5 @@
 async function getDistrictWisePopulation() {
-    FILENAME = "../DropDown/district_wise_population_india.json"
+    FILENAME = "../JSON_files/district_wise_population_india.json"
 
     response = await fetch(FILENAME)
     jsonData = await response.json()
