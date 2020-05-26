@@ -147,7 +147,7 @@ async function nextStates(state) {
     return next
 }
 
-var retriveData = (state, district) => {
+var plot = (state, district) => {
     // Only state is passed
     console.log("Plotting....");
     if (district == undefined || district == null) {
@@ -220,7 +220,8 @@ function drawChart(placename, prev, next) {
 
 
 function activeChart(place, dates, prev_active, next_active) {
-
+    window.parent.$('#achart').remove();
+    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
     var canvas = window.parent.document.getElementById("achart");
     var ctx = canvas.getContext('2d');
 
@@ -301,6 +302,8 @@ function activeChart(place, dates, prev_active, next_active) {
 
 function deathChart(place, dates, prev_deaths, next_deaths) {
 
+    window.parent.$('#dchart').remove();
+    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
     var canvas = window.parent.document.getElementById("dchart");
     var ctx = canvas.getContext('2d');
 
