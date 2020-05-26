@@ -151,9 +151,9 @@ var plot = (state, district) => {
     // Only state is passed
     console.log("Plotting....");
     if (district == undefined || district == null) {
+        console.log(state)
         prev = prevStates(state, district)
         next = nextStates(state, district)
-
         Promise.all([prev, next]).then(values => {
             console.log(values)
 
@@ -165,6 +165,8 @@ var plot = (state, district) => {
         })
     } else {
         // State and District are passed
+        console.log(state)
+        console.log(district)
         prev = prevDistricts(state, district)
         next = nextDistricts(state, district)
 
@@ -180,6 +182,20 @@ var plot = (state, district) => {
 }
 
 // chart.js
+
+
+function scaleYaxis(max_elem) {
+    var dig = 0
+    if (max_elem < 10 )
+        return 15
+    while ( max_elem > 9 )
+    {
+        dig += 1
+        max_elem /= 10
+    }
+
+    return ( (max_elem + 2) * Math.pow(10, dig) )
+}
 function drawChart(placename, prev, next) {
     var i;
     prev_dates = prev[0]
@@ -194,32 +210,53 @@ function drawChart(placename, prev, next) {
     p_len = prev_dates.length
 
     //Next 3 lines to connect acitve and predicted lines in graph
-    next_active.unshift(prev_active[p_len - 1]);
-    next_deaths.unshift(prev_deaths[p_len - 1]);
     p_len -= 1
-    console.log(next_active)
+    next_active.unshift(prev_active[p_len]);
+    next_deaths.unshift(prev_deaths[p_len]);
+
+    var max_act = prev_active[p_len]
+    var max_dead = prev_deaths[p_len]
+
     for (i = 0; i < p_len; i++) {
         next_active.unshift(null);
         next_deaths.unshift(null);
+
+        if (prev_active[i] > max_act) {
+            max_act = prev_active[i]
+        }
+
+        if (prev_deaths[i] > max_dead) {
+            max_dead = prev_deaths[i]
+        }
     }
-    console.log(next_active)
 
 
     for (i = 0; i < next_dates.length; i++) {
         prev_active.push(null);
         prev_deaths.push(null);
+
+        if (next_active[i] > max_act) {
+            max_act = next_active[i]
+        }
+
+        if (next_deaths[i] > max_dead) {
+            max_act = next_deaths[i]
+        }
     }
 
     dates = prev_dates.concat(next_dates)
+    
+    max_act = scaleYaxis(max_act)
+    max_dead = scaleYaxis(max_dead)
 
-    activeChart(placename, dates, prev_active, next_active)
-    deathChart(placename, dates, prev_deaths, next_deaths)
+    activeChart(placename, dates, prev_active, next_active, max_act)
+    deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
 
 }
 
 
 
-function activeChart(place, dates, prev_active, next_active) {
+function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
     window.parent.$('#achart').remove();
     window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
     var canvas = window.parent.document.getElementById("achart");
@@ -275,7 +312,8 @@ function activeChart(place, dates, prev_active, next_active) {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    suggestedMax: yaxis_scale
                 }
             }],
             xAxes: [{
@@ -300,7 +338,7 @@ function activeChart(place, dates, prev_active, next_active) {
     });
 }
 
-function deathChart(place, dates, prev_deaths, next_deaths) {
+function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
 
     window.parent.$('#dchart').remove();
     window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
@@ -355,7 +393,8 @@ function deathChart(place, dates, prev_deaths, next_deaths) {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    suggestedMax: yaxis_scale
                 }
             }],
             xAxes: [{
