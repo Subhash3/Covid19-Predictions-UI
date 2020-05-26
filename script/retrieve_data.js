@@ -3,7 +3,7 @@
 
 DISTRICT_API_URL = "https://api.covid19india.org/districts_daily.json"
 STATE_API_URL = "https://api.covid19india.org/states_daily.json"
-PREDICTION_API = "http://40.76.33.143/predict/"
+PREDICTION_API_URL = "http://40.76.33.143/predict/"
 
 DAYS = 7
 
@@ -54,7 +54,7 @@ async function prevDistricts(state, district) {
 }
 
 async function nextDistricts(state, district) {
-    PREDICTION_API = new URL(PREDICTION_API)
+    PREDICTION_API = new URL(PREDICTION_API_URL)
     PREDICTION_API.searchParams.append("state", state)
     PREDICTION_API.searchParams.append("district", district)
 
@@ -126,7 +126,7 @@ async function prevStates(state) {
 }
 
 async function nextStates(state) {
-    PREDICTION_API = new URL(PREDICTION_API)
+    PREDICTION_API = new URL(PREDICTION_API_URL)
     PREDICTION_API.searchParams.append("state", state)
 
     response = await fetch(PREDICTION_API)
