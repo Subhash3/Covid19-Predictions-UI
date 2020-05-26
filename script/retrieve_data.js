@@ -185,10 +185,10 @@ var plot = (state, district) => {
                 placeName = state
                 drawChart(placeName, prev, next)
 
+                lastplot = state
             })
         }
 
-        lastplot = state
     }
     else {
         // State and District are passed
@@ -209,9 +209,9 @@ var plot = (state, district) => {
                 next = values[1]
                 placeName = state + " => " + district
                 drawChart(placeName, prev, next)
+                lastplot = district
             })
         }
-        lastplot = district
     }
 }
 
