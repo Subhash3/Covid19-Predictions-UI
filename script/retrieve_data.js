@@ -5,9 +5,23 @@ DISTRICT_API_URL = "https://api.covid19india.org/districts_daily.json"
 STATE_API_URL = "https://api.covid19india.org/states_daily.json"
 PREDICTION_API_URL = "http://40.76.33.143/predict/"
 
+var lastplot = ""
+
 DAYS = 7
 
-STATE_CODES = { 'State Unassigned': 'un', 'Andaman and Nicobar Islands': 'an', 'Andhra Pradesh': 'ap', 'Arunachal Pradesh': 'ar', 'Assam': 'as', 'Bihar': 'br', 'Chandigarh': 'ch', 'Chhattisgarh': 'ct', 'Delhi': 'dl', 'Dadra and Nagar Haveli and Daman and Diu': 'dn', 'Goa': 'ga', 'Gujarat': 'gj', 'Himachal Pradesh': 'hp', 'Haryana': 'hr', 'Jharkhand': 'jh', 'Jammu and Kashmir': 'jk', 'Karnataka': 'ka', 'Kerala': 'kl', 'Ladakh': 'la', 'Lakshadweep': 'ld', 'Maharashtra': 'mh', 'Meghalaya': 'ml', 'Manipur': 'mn', 'Madhya Pradesh': 'mp', 'Mizoram': 'mz', 'Nagaland': 'nl', 'Odisha': 'or', 'Punjab': 'pb', 'Puducherry': 'py', 'Rajasthan': 'rj', 'Sikkim': 'sk', 'Telangana': 'tg', 'Tamil Nadu': 'tn', 'Tripura': 'tr', 'Uttar Pradesh': 'up', 'Uttarakhand': 'ut', 'West Bengal': 'wb' }
+STATE_CODES = {
+    'State Unassigned': 'un', 'Andaman and Nicobar Islands': 'an',
+    'Andhra Pradesh': 'ap', 'Arunachal Pradesh': 'ar', 'Assam': 'as',
+    'Bihar': 'br', 'Chandigarh': 'ch', 'Chhattisgarh': 'ct', 'Delhi': 'dl',
+    'Dadra and Nagar Haveli and Daman and Diu': 'dn', 'Goa': 'ga',
+    'Gujarat': 'gj', 'Himachal Pradesh': 'hp', 'Haryana': 'hr',
+    'Jharkhand': 'jh', 'Jammu and Kashmir': 'jk', 'Karnataka': 'ka',
+    'Kerala': 'kl', 'Ladakh': 'la', 'Lakshadweep': 'ld', 'Maharashtra': 'mh',
+    'Meghalaya': 'ml', 'Manipur': 'mn', 'Madhya Pradesh': 'mp', 'Mizoram': 'mz',
+    'Nagaland': 'nl', 'Odisha': 'or', 'Punjab': 'pb', 'Puducherry': 'py',
+    'Rajasthan': 'rj', 'Sikkim': 'sk', 'Telangana': 'tg', 'Tamil Nadu': 'tn',
+    'Tripura': 'tr', 'Uttar Pradesh': 'up', 'Uttarakhand': 'ut', 'West Bengal': 'wb'
+}
 
 function changeDateFormat(date_str) {
     var months = {
@@ -149,35 +163,55 @@ async function nextStates(state) {
 
 var plot = (state, district) => {
     // Only state is passed
-    console.log("Plotting....");
+    
+
+
     if (district == undefined || district == null) {
         console.log(state)
-        prev = prevStates(state, district)
-        next = nextStates(state, district)
-        Promise.all([prev, next]).then(values => {
-            console.log(values)
 
-            prev = values[0]
-            next = values[1]
-            placeName = state
-            drawChart(placeName, prev, next)
+        if (lastplot == state) {
+            console.log("Same plotted already")
+        }
+        else {
+            console.log("Plotting....");
+            prev = prevStates(state, district)
+            next = nextStates(state, district)
 
-        })
-    } else {
+            Promise.all([prev, next]).then(values => {
+                console.log(values)
+
+                prev = values[0]
+                next = values[1]
+                placeName = state
+                drawChart(placeName, prev, next)
+
+            })
+        }
+
+        lastplot = state
+    }
+    else {
         // State and District are passed
         console.log(state)
         console.log(district)
-        prev = prevDistricts(state, district)
-        next = nextDistricts(state, district)
 
-        Promise.all([prev, next]).then(values => {
-            console.log(values)
+        if (lastplot == district) {
+            console.log("Same plotted already")
+        }
+        else {
+            prev = prevDistricts(state, district)
+            next = nextDistricts(state, district)
 
-            prev = values[0]
-            next = values[1]
-            placeName = state + " => " + district
-            drawChart(placeName, prev, next)
-        })
+            Promise.all([prev, next]).then(values => {
+                console.log(values)
+
+                prev = values[0]
+                next = values[1]
+                placeName = state + " => " + district
+                drawChart(placeName, prev, next)
+            })
+        }
+        lastplot = district
     }
 }
 
@@ -186,15 +220,14 @@ var plot = (state, district) => {
 
 function scaleYaxis(max_elem) {
     var dig = 0
-    if (max_elem < 10 )
+    if (max_elem < 10)
         return 15
-    while ( max_elem > 9 )
-    {
+    while (max_elem > 9) {
         dig += 1
         max_elem /= 10
     }
 
-    return ( (max_elem + 2) * Math.pow(10, dig) )
+    return ((max_elem + 2) * Math.pow(10, dig))
 }
 function drawChart(placename, prev, next) {
     var i;
@@ -245,7 +278,7 @@ function drawChart(placename, prev, next) {
     }
 
     dates = prev_dates.concat(next_dates)
-    
+
     max_act = scaleYaxis(max_act)
     max_dead = scaleYaxis(max_dead)
 
