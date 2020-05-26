@@ -163,7 +163,7 @@ async function nextStates(state) {
 
 var plot = (state, district) => {
     // Only state is passed
-    
+
 
 
     if (district == undefined || district == null) {
@@ -183,6 +183,10 @@ var plot = (state, district) => {
                 prev = values[0]
                 next = values[1]
                 placeName = state
+
+                window.parent.$('#state-name').html(state)
+                // window.parent.$('#state-name').addClass('state')
+
                 drawChart(placeName, prev, next)
 
                 lastplot = state
@@ -208,6 +212,9 @@ var plot = (state, district) => {
                 prev = values[0]
                 next = values[1]
                 placeName = state + " => " + district
+
+                window.parent.$('#state-name').html(state)
+                window.parent.$('#district-name').html(district)
                 drawChart(placeName, prev, next)
                 lastplot = district
             })
@@ -341,6 +348,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
             display: true,
             text: place + ' Active cases Predictions(next 7 days)'
         },
+        maintainAspectRatio: false,
         responsive: true,
         scales: {
             yAxes: [{
@@ -422,6 +430,7 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
             display: true,
             text: place + ' Deceased Predictions(next 7 days)'
         },
+        maintainAspectRatio: false,
         responsive: true,
         scales: {
             yAxes: [{

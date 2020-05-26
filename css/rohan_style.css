@@ -5,12 +5,12 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
 }
 
-.header{
+.header {
     margin-top: 30px;
     width: 100%;
     text-align: center;
@@ -38,21 +38,28 @@ body{
     margin: 10px;
 }
 
-.map-and-graphs .map{
+.map-and-graphs .map {
     position: relative;
     width: 55%;
     margin-left: 20px;
 }
 
-.map-and-graphs .graphs{
+.map-and-graphs .graphs {
     position: relative;
     margin-left: 10%;
     width: 45%;
     margin: 10px;
+    /* background-color: rgb(240, 236, 236); */
+}
+
+.map-and-graphs .graphs .style_canvas {
+    height: 43vh;
+    border-radius: 8px;
 }
 
 /* .mpadiv { */
-.mapdiv path{
+
+.mapdiv path {
     fill: #ffeeee;
     stroke: #a85f5f;
     stroke-width: 1px;
@@ -61,11 +68,11 @@ body{
 
 .mapdiv path:hover {
     fill: #ffaaaa;
-    stroke: #ff1111; 
+    stroke: #ff1111;
     stroke-width: 2px;
 }
 
-.mapdiv a{
+.mapdiv a {
     text-decoration: none;
 }
 
@@ -78,18 +85,18 @@ body{
     color: white;
 }
 
-.states-list{
+.states-list {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
 }
 
-.states-list .states .districts{
+.states-list .states .districts {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
 }
 
 @media screen and (max-width: 480px) {
-    body{
+    body {
         background: greenyellow;
     }
     .map-and-graphs {
