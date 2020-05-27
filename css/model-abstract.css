@@ -1,0 +1,24 @@
+body{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.abstract-text{
+    position: relative;
+    width: 80%;
+    top: 100px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.abstract-text h3{
+    position: relative;
+    left: 40%;
+    margin: 15px 0;
+}

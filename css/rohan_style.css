@@ -8,6 +8,7 @@
 body {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .header {
@@ -58,13 +59,9 @@ body {
     border-radius: 8px;
 }
 
-/* .mpadiv {
-    he
-} */
-
 .mapdiv path {
-    fill: #ffeeee;
-    stroke: #a85f5f;
+    fill: #f5d7c5;
+    stroke: #5a3535;
     stroke-width: 1px;
     transition: fill 0.3s;
 }
@@ -101,9 +98,6 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-    body {
-        background: greenyellow;
-    }
     .map-and-graphs {
         position: relative;
         display: flex;
