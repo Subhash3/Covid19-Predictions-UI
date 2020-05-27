@@ -48,14 +48,14 @@ body {
 .map-and-graphs .graphs {
     position: relative;
     margin-left: 10%;
-    width: 35%;
+    width: 36%;
     margin: 5px;
     margin-left: 8%;
     /* background-color: rgb(240, 236, 236); */
 }
 
 .map-and-graphs .graphs .style_canvas {
-    height: 43vh;
+    height: 40vh;
     border-radius: 8px;
 }
 
