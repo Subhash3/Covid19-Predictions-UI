@@ -27,6 +27,19 @@ function createFileName(state, district, date) {
 
     return filename
 }
+function clearHeading()
+{
+    window.parent.$('#state-name').remove()
+    window.parent.$('#district-name').remove()
+}
+function clearGraph()
+{
+
+    window.parent.$('#achart').remove();
+    window.parent.$('#dchart').remove();
+    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
+    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
+}
 
 async function readData(state, district, dt) {
 
@@ -62,8 +75,8 @@ async function plot(state, district) {
             prev = values[0]
             next = values[1]
             placeName = state
-
             window.parent.$('#state-name').html(state)
+            window.parent.$('#district-name').html('')
             // window.parent.$('#state-name').addClass('state')
 
             drawChart(placeName, prev, next)
@@ -162,6 +175,7 @@ function drawChart(placename, prev, next) {
     max_act = scaleYaxis(max_act)
     max_dead = scaleYaxis(max_dead)
 
+    clearGraph()
     activeChart(placename, dates, prev_active, next_active, max_act)
     deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
 
@@ -170,8 +184,7 @@ function drawChart(placename, prev, next) {
 
 
 function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
-    window.parent.$('#achart').remove();
-    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
+
     var canvas = window.parent.document.getElementById("achart");
     var ctx = canvas.getContext('2d');
 
@@ -254,8 +267,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
 
 function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
 
-    window.parent.$('#dchart').remove();
-    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
+  
     var canvas = window.parent.document.getElementById("dchart");
     var ctx = canvas.getContext('2d');
 
