@@ -27,17 +27,7 @@ function createFileName(state, district, date) {
 
     return filename
 }
-function clearHeading() {
-    window.parent.$('#state-name').remove()
-    window.parent.$('#district-name').remove()
-}
-function clearGraph() {
 
-    window.parent.$('#achart').remove();
-    window.parent.$('#dchart').remove();
-    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
-    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
-}
 
 async function readData(state, district, dt) {
     filename = createFileName(state, district, dt)
@@ -70,6 +60,7 @@ async function plot(state, district) {
         else {
             console.log("Plotting....", state);
             values = await readData(state, district, getCurrentDate())
+            console.log(values)
             window.parent.$('#state-name').html(state)
             window.parent.$('#district-name').html('')
             if (values == null) {
@@ -121,7 +112,17 @@ async function plot(state, district) {
     }
 }
 
+function clearHeading() {
+    window.parent.$('#state-name').remove()
+    window.parent.$('#district-name').remove()
+}
+function clearGraph() {
 
+    window.parent.$('#achart').remove();
+    window.parent.$('#dchart').remove();
+    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
+    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
+}
 
 function scaleYaxis(max_elem) {
     var dig = 0
@@ -150,6 +151,12 @@ function drawChart(placename, prev, next) {
 
     prev_deaths = prev[2]
     next_deaths = next[2]
+  
+    clearTable('#atableH', '#atableP')
+    clearTable('#dtableH', '#dtableP')
+    createTable(['Date', 'Active', 'Deceased'], '#atableH')
+    fillTable([prev_dates, prev_active, prev_deaths], '#atableP')
+    fillTable([next_dates, next_active, next_deaths], '#dtableP')
 
     p_len = prev_dates.length
 
@@ -194,6 +201,7 @@ function drawChart(placename, prev, next) {
     max_dead = scaleYaxis(max_dead)
 
     clearGraph()
+    createTable(['Date', 'Predicted \n Active', 'Predicted \n Deceased'], '#dtableH')
     activeChart(placename, dates, prev_active, next_active, max_act)
     deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
 

@@ -37,6 +37,7 @@ body {
     flex-direction: row;
     /* height: 140vh; */
     margin: 10px;
+    margin-left: 0;
 }
 
 .map-and-graphs .map {
@@ -47,9 +48,9 @@ body {
 
 .map-and-graphs .graphs {
     position: relative;
-    margin-left: 10%;
+    /* margin-left: 10%; */
     width: 36%;
-    margin: 5px;
+    /* margin: 5px; */
     margin-left: 8%;
     /* background-color: rgb(240, 236, 236); */
 }
