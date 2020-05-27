@@ -9,5 +9,5 @@ document.head.appendChild(imported);
 function plot(state, district) {
     console.log(state, district);
     // plotGraph(state, district)
-    retriveData(state, district)
+    plot(state, district)
 }

@@ -40,15 +40,16 @@ body {
 
 .map-and-graphs .map {
     position: relative;
-    width: 55%;
-    margin-left: 20px;
+    width: 45%;
+    margin-left: 2%;
 }
 
 .map-and-graphs .graphs {
     position: relative;
     margin-left: 10%;
-    width: 45%;
-    margin: 10px;
+    width: 35%;
+    margin: 5px;
+    margin-left: 8%;
     /* background-color: rgb(240, 236, 236); */
 }
 
@@ -57,7 +58,9 @@ body {
     border-radius: 8px;
 }
 
-/* .mpadiv { */
+/* .mpadiv {
+    he
+} */
 
 .mapdiv path {
     fill: #ffeeee;
@@ -80,9 +83,11 @@ body {
     text-decoration: none;
     padding: 20px;
     width: 50%;
+    margin: 2%;
     text-align: center;
     background-color: #333;
     color: white;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .states-list {
