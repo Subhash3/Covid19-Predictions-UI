@@ -51,7 +51,6 @@ async function readData(state, district, dt) {
 
 async function plot(state, district) {
     // Only state is passed
-
     if (district == undefined || district == null) {
 
         if (LAST_PLOTTED == state) {
@@ -88,8 +87,7 @@ async function plot(state, district) {
         }
         else {
             console.log('Plotting....')
-            console.log(state)
-            console.log(district)
+            console.log(state, district)
             values = await readData(state, district, getCurrentDate())
             $('#state-name').html(state)
             $('#district-name').html(district)

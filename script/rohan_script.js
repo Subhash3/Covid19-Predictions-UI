@@ -25,11 +25,11 @@ function view_state(evt, state) {
 
 // plot function
 
-function plot(state, district) {
-    console.log(state, district);
-    // plotGraph(state, district)
-    plot(state, district)
-}
+// function plot(state, district) {
+//     console.log(state, district);
+//     // plotGraph(state, district)
+//     plot(state, district)
+// }
 
 
 // back to India map from state
