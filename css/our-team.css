@@ -177,4 +177,18 @@ body {
     margin-top: 150px;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .developers {
+    -ms-grid-columns: (1fr)[1];
+        grid-template-columns: repeat(1, 1fr);
+  }
+  .developers .developer:first-child {
+    margin-top: 250px;
+  }
+  .developers .dev-info {
+    padding: 100px;
+    border: 1px solid white;
+  }
+}
 /*# sourceMappingURL=our-team.css.map */

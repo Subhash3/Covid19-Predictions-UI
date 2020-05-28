@@ -22,3 +22,28 @@ body{
     left: 40%;
     margin: 15px 0;
 }
+
+.initiative-footer{
+    position: relative;
+    bottom: 0px;
+}
+
+@media screen and (max-width: 850px){
+    body{
+        /* background: pink; */
+    }
+
+    .abstract-text{
+        height: 120vh;
+    }
+}
+
+@media screen and (max-width: 620px){
+    body{
+        /* background: green; */
+    }
+
+    .abstract-text{
+        height: 180vh;
+    }
+}
