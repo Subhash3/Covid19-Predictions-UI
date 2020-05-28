@@ -61,19 +61,19 @@ async function plot(state, district) {
             console.log("Plotting....", state);
             values = await readData(state, district, getCurrentDate())
             console.log(values)
-            window.parent.$('#state-name').html(state)
-            window.parent.$('#district-name').html('')
+            $('#state-name').html(state)
+            $('#district-name').html('')
             if (values == null) {
-                window.parent.$('#achart-cont').css('filter', 'blur(4px)');
-                window.parent.$('#dchart-cont').css('filter', 'blur(4px)');
+                $('#achart-cont').css('filter', 'blur(4px)');
+                $('#dchart-cont').css('filter', 'blur(4px)');
             }
             else {
                 prev = values[0]
                 next = values[1]
                 placeName = state
 
-                window.parent.$('#achart-cont').css('filter', 'blur(0px)');
-                window.parent.$('#dchart-cont').css('filter', 'blur(0px)');
+                $('#achart-cont').css('filter', 'blur(0px)');
+                $('#dchart-cont').css('filter', 'blur(0px)');
                 drawChart(placeName, prev, next)
             }
             LAST_PLOTTED = state
@@ -91,20 +91,20 @@ async function plot(state, district) {
             console.log(state)
             console.log(district)
             values = await readData(state, district, getCurrentDate())
-            window.parent.$('#state-name').html(state)
-            window.parent.$('#district-name').html(district)
+            $('#state-name').html(state)
+            $('#district-name').html(district)
 
             if (values == null) {
-                window.parent.$('#achart-cont').css('filter', 'blur(4px)');
-                window.parent.$('#dchart-cont').css('filter', 'blur(4px)');
+                $('#achart-cont').css('filter', 'blur(4px)');
+                $('#dchart-cont').css('filter', 'blur(4px)');
             }
             else {
                 prev = values[0]
                 next = values[1]
                 placeName = state + '=>' + district
 
-                window.parent.$('#achart-cont').css('filter', 'blur(0px)');
-                window.parent.$('#dchart-cont').css('filter', 'blur(0px)');
+                $('#achart-cont').css('filter', 'blur(0px)');
+                $('#dchart-cont').css('filter', 'blur(0px)');
                 drawChart(placeName, prev, next)
             }
             LAST_PLOTTED = state
@@ -113,15 +113,15 @@ async function plot(state, district) {
 }
 
 function clearHeading() {
-    window.parent.$('#state-name').remove()
-    window.parent.$('#district-name').remove()
+    $('#state-name').remove()
+    $('#district-name').remove()
 }
 function clearGraph() {
 
-    window.parent.$('#achart').remove();
-    window.parent.$('#dchart').remove();
-    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
-    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
+    $('#achart').remove();
+    $('#dchart').remove();
+    $('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
+    $('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
 }
 
 function scaleYaxis(max_elem) {
@@ -216,7 +216,7 @@ function drawChart(placename, prev, next) {
 //         return 4
 //     }
 //     else if ( yaxis_scale < 51 )
-//     {
+//    
 //         return 5
 //     }
 //     else if (yaxis_scale < 101) {
@@ -244,7 +244,7 @@ function drawChart(placename, prev, next) {
 
 function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
 
-    var canvas = window.parent.document.getElementById("achart");
+    var canvas = document.getElementById("achart");
     var ctx = canvas.getContext('2d');
 
     // var step_size = getStepSize(yaxis_scale)
@@ -330,7 +330,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
 function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
 
 
-    var canvas = window.parent.document.getElementById("dchart");
+    var canvas = document.getElementById("dchart");
     var ctx = canvas.getContext('2d');
 
     var data = {
