@@ -7,12 +7,13 @@
 .menu{
     position: relative;
     width: 100vw;
-    height: 60px;
+    height: 80px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
     box-shadow: 1px 1px 5px black;
+    /* border: 1px solid black; */
 }
 
 .menu div{
@@ -27,6 +28,17 @@
     /* border: 1px solid #ccc; */
 }
 
+.menu .logo{
+    position: absolute;
+    left: 0px;
+    margin: 0;
+}
+
+.logo img{
+    width: 60px;
+    height: 60px;
+}
+
 .menu a {
     text-decoration: none;
     color:rgb(0, 0, 0);
@@ -36,7 +48,7 @@
     font-size: 12px;
     outline: none;
 }
-.menu div:hover{
+.menu div:hover:not(.logo){
     background: rgb(0, 0, 0);
 }
 
@@ -64,5 +76,9 @@
         width: 100%;
         border-radius: 0;
         padding: 10px 0;
+        box-shadow: 1px 1px 5px black;
+    }
+    .menu .logo{
+        position: relative;
     }
 }
