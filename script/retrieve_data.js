@@ -27,32 +27,20 @@ function createFileName(state, district, date) {
 
     return filename
 }
-function clearHeading()
-{
-    window.parent.$('#state-name').remove()
-    window.parent.$('#district-name').remove()
-}
-function clearGraph()
-{
 
-    window.parent.$('#achart').remove();
-    window.parent.$('#dchart').remove();
-    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
-    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
-}
 
 async function readData(state, district, dt) {
-
     filename = createFileName(state, district, dt)
-    // let rawdata = fs.readFileSync(filename);
-    // let dataset = JSON.parse(rawdata);
-
-    // fs.readFile('Input.txt', (err, rawdata) => {
-    //     if (err) throw err;
-    //     let dataset = JSON.parse(rawdata);
-    // })
     response = await fetch(DATASETS_DIR + filename)
-    jsonData = await response.json()
+    var jsonData = []
+    if (response.status >= 200 && response.status <= 299) {
+        jsonData = await response.json();
+        // console.log(jsonResponse);
+    } else {
+        // Handle errors
+        jsonData = null
+        console.log(response.status, response.statusText);
+    }
 
     return jsonData
 }
@@ -60,56 +48,81 @@ async function readData(state, district, dt) {
 // readData('Andhra Pradesh', null, getCurrentDate());
 
 
+
 async function plot(state, district) {
     // Only state is passed
 
     if (district == undefined || district == null) {
-        console.log(state)
 
         if (LAST_PLOTTED == state) {
             console.log("Same plotted already")
         }
         else {
-            console.log("Plotting....");
+            console.log("Plotting....", state);
             values = await readData(state, district, getCurrentDate())
-            prev = values[0]
-            next = values[1]
-            placeName = state
+            console.log(values)
             window.parent.$('#state-name').html(state)
             window.parent.$('#district-name').html('')
-            // window.parent.$('#state-name').addClass('state')
+            if (values == null) {
+                window.parent.$('#achart-cont').css('filter', 'blur(4px)');
+                window.parent.$('#dchart-cont').css('filter', 'blur(4px)');
+            }
+            else {
+                prev = values[0]
+                next = values[1]
+                placeName = state
 
-            drawChart(placeName, prev, next)
-
+                window.parent.$('#achart-cont').css('filter', 'blur(0px)');
+                window.parent.$('#dchart-cont').css('filter', 'blur(0px)');
+                drawChart(placeName, prev, next)
+            }
             LAST_PLOTTED = state
-
         }
 
     }
     else {
         // State and District are passed
-        console.log(state)
-        console.log(district)
 
         if (LAST_PLOTTED == district) {
             console.log("Same plotted already")
         }
         else {
+            console.log('Plotting....')
+            console.log(state)
+            console.log(district)
             values = await readData(state, district, getCurrentDate())
-
-            prev = values[0]
-            next = values[1]
-            placeName = state + " => " + district
-
             window.parent.$('#state-name').html(state)
             window.parent.$('#district-name').html(district)
-            drawChart(placeName, prev, next)
-            LAST_PLOTTED = district
+
+            if (values == null) {
+                window.parent.$('#achart-cont').css('filter', 'blur(4px)');
+                window.parent.$('#dchart-cont').css('filter', 'blur(4px)');
+            }
+            else {
+                prev = values[0]
+                next = values[1]
+                placeName = state + '=>' + district
+
+                window.parent.$('#achart-cont').css('filter', 'blur(0px)');
+                window.parent.$('#dchart-cont').css('filter', 'blur(0px)');
+                drawChart(placeName, prev, next)
+            }
+            LAST_PLOTTED = state
         }
     }
 }
 
+function clearHeading() {
+    window.parent.$('#state-name').remove()
+    window.parent.$('#district-name').remove()
+}
+function clearGraph() {
 
+    window.parent.$('#achart').remove();
+    window.parent.$('#dchart').remove();
+    window.parent.$('#dchart-cont').html('<canvas class="chart" id="dchart"></canvas>');
+    window.parent.$('#achart-cont').html('<canvas class="chart" id="achart"></canvas>');
+}
 
 function scaleYaxis(max_elem) {
     var dig = 0
@@ -119,8 +132,14 @@ function scaleYaxis(max_elem) {
         dig += 1
         max_elem /= 10
     }
+    if (dig < 3) {
 
-    return ((max_elem + 2) * Math.pow(10, dig))
+        return ((max_elem + 2) * Math.pow(10, dig))
+    }
+    else {
+        return ((max_elem + 1) * Math.pow(10, dig))
+    }
+
 }
 function drawChart(placename, prev, next) {
     var i;
@@ -132,6 +151,12 @@ function drawChart(placename, prev, next) {
 
     prev_deaths = prev[2]
     next_deaths = next[2]
+  
+    clearTable('#atableH', '#atableP')
+    clearTable('#dtableH', '#dtableP')
+    createTable(['Date', 'Active', 'Deceased'], '#atableH')
+    fillTable([prev_dates, prev_active, prev_deaths], '#atableP')
+    fillTable([next_dates, next_active, next_deaths], '#dtableP')
 
     p_len = prev_dates.length
 
@@ -176,19 +201,54 @@ function drawChart(placename, prev, next) {
     max_dead = scaleYaxis(max_dead)
 
     clearGraph()
+    createTable(['Date', 'Predicted \n Active', 'Predicted \n Deceased'], '#dtableH')
     activeChart(placename, dates, prev_active, next_active, max_act)
     deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
 
 }
-
-
+// function getStepSize(yaxis_scale) {
+//     if ( yaxis_scale < 19 )
+//     {
+//         return 2
+//     }
+//     else if ( yaxis_scale < 31 )
+//     {
+//         return 4
+//     }
+//     else if ( yaxis_scale < 51 )
+//     {
+//         return 5
+//     }
+//     else if (yaxis_scale < 101) {
+//         return 10
+//     }
+//     else if (yaxis_scale < 501) {
+//         return 50
+//     }
+//     else if (yaxis_scale < 1001) {
+//         return 100
+//     }
+//     else if (yaxis_scale < 5001) {
+//         return 500
+//     }
+//     else if (yaxis_scale < 10001) {
+//         return 2000
+//     }
+//     else if (yaxis_scale < 500001){
+//         return 5000
+//     }
+//     else{
+//         return 10000
+//     }
+// }
 
 function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
 
     var canvas = window.parent.document.getElementById("achart");
     var ctx = canvas.getContext('2d');
 
-
+    // var step_size = getStepSize(yaxis_scale)
+    // console.log(yaxis_scale, step_size)
     var data = {
         labels: dates,
         datasets: [{
@@ -240,7 +300,9 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    suggestedMax: yaxis_scale
+                    suggestedMax: yaxis_scale,
+                    // stepSize: step_size
+                    maxTicksLimit: 9
                 }
             }],
             xAxes: [{
@@ -267,7 +329,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
 
 function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
 
-  
+
     var canvas = window.parent.document.getElementById("dchart");
     var ctx = canvas.getContext('2d');
 
@@ -321,7 +383,8 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    suggestedMax: yaxis_scale
+                    suggestedMax: yaxis_scale,
+                    maxTicksLimit: 9
                 }
             }],
             xAxes: [{

@@ -20,6 +20,9 @@
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script defer src="./script/retrieve_data.js"> </script>
+    <script src="script/table.js"></script>
+    <!-- <script defer src="./script/dropdown.js"></script> -->
+
 </head>
 
 <body>
@@ -47,6 +50,25 @@
                 <canvas class="chart" id="dchart"></canvas>
             </div>
         </div>
+    </div>
+    <div style="width: 100%; padding: 0% 5%; display: flex;">
+
+        <table style="width: 50%;" class="table-fill">
+            <thead id="atableH">
+
+            </thead>
+            <tbody id="atableP">
+
+            </tbody>
+        </table>
+        <table style="width: 50%;" class="table-fill">
+            <thead id="dtableH">
+
+            </thead>
+            <tbody id="dtableP">
+
+            </tbody>
+        </table>
     </div>
 
     <!-- <div class="dropdown_container" id="dropdown_container">
