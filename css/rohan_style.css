@@ -71,7 +71,7 @@ body {
   border-radius: 8px;
 }
 
-.mapdiv path {
+.map path {
   fill: #f5d7c5;
   stroke: #5a3535;
   stroke-width: 1px;
@@ -79,7 +79,7 @@ body {
   transition: fill 0.3s;
 }
 
-.mapdiv path:hover {
+.map path:hover {
   fill: #ffaaaa;
   stroke: #ff1111;
   stroke-width: 2px;
