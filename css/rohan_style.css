@@ -53,21 +53,24 @@ body {
 
 .map-and-graphs .map {
   position: relative;
-  width: 40%;
+  width: 50%;
   margin-left: 2%;
+  margin-top: 100px;
+  /* border: 1px solid orange; */
 }
 
 .map-and-graphs .graphs {
   position: relative;
   /* margin-left: 10%; */
-  width: 36%;
+  width: 46%;
   /* margin: 5px; */
-  margin-left: 8%;
+  margin-left: 1%;
   /* background-color: rgb(240, 236, 236); */
+  /* border: 1px solid orange; */
 }
 
 .map-and-graphs .graphs .style_canvas {
-  height: 38vh;
+  height: 55vh;
   border-radius: 8px;
 }
 
