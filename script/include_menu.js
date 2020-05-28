@@ -15,7 +15,3 @@ var renderMenu = async () => {
     thisBody = document.getElementsByTagName('body')[0]
     thisBody.prepend(menuDiv)
 }
-
-window.onload = () => {
-    renderMenu()
-}

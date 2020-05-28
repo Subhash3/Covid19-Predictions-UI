@@ -29,7 +29,7 @@
 
 .menu a {
     text-decoration: none;
-    color:black;
+    color:rgb(0, 0, 0);
     padding: 5px 5px;
     transition: 0.7s;
     text-transform: uppercase;
