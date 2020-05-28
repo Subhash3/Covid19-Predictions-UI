@@ -23,12 +23,12 @@
   height: 300px;
   color: white;
   font-size: 12px;
-  bottom: 0;
+  bottom: 0px;
 }
 
 .initiative::before {
-  position: absolute;
   content: '';
+  position: absolute;
   height: 2px;
   width: 300px;
   background: #fff;
@@ -36,8 +36,8 @@
 }
 
 .initiative::after {
-  position: absolute;
   content: '';
+  position: absolute;
   height: 2px;
   width: 300px;
   background: #fff;

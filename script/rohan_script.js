@@ -15,7 +15,7 @@ document.head.appendChild(imported);
 function view_state(evt, state) {
     document.getElementById("India").style.display = "none";
 
-    var disp_state = state.id+ " districts";
+    var disp_state = state.id + " districts";
     document.getElementById(disp_state).style.display = "block";
 
     var backbtn = document.getElementById('backbtn');
@@ -46,14 +46,14 @@ function back(buttonObj) {
 
 var tooltip = document.querySelector('#tooltip');
 
-[].forEach.call(document.querySelectorAll('path'), function(item) {
-    item.addEventListener('mouseenter', function() {
+[].forEach.call(document.querySelectorAll('path'), function (item) {
+    item.addEventListener('mouseenter', function () {
         var sel = this, pos = sel.getBoundingClientRect()
-        
+
         tooltip.innerHTML = this.id;
 
         tooltip.style.display = 'block';
-        tooltip.style.top = pos.top + 'px';
+        tooltip.style.top = pos.top + 100 + 'px';
         tooltip.style.left = pos.left + 'px';
 
 
@@ -64,8 +64,8 @@ var tooltip = document.querySelector('#tooltip');
         // tooltip.style.left = x + 'px';
 
     });
-  
-    item.addEventListener('mouseleave', function(){
+
+    item.addEventListener('mouseleave', function () {
         tooltip.style.display = 'none';
     });
 });

@@ -149,7 +149,7 @@ function drawChart(placename, prev, next) {
 
     prev_deaths = prev[2]
     next_deaths = next[2]
-  
+
     clearTable('#atableH', '#atableP')
     clearTable('#dtableH', '#dtableP')
     createTable(['Date', 'Active', 'Deceased'], '#atableH')
@@ -199,7 +199,7 @@ function drawChart(placename, prev, next) {
     max_dead = scaleYaxis(max_dead)
 
     clearGraph()
-    createTable(['Date', 'Predicted \n Active', 'Predicted \n Deceased'], '#dtableH')
+    createTable(['Date', 'Active', 'Deceased'], '#dtableH')
     activeChart(placename, dates, prev_active, next_active, max_act)
     deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
 
