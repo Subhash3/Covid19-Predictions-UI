@@ -62,17 +62,26 @@ async function plot(state, district) {
             console.log(values)
             $('#state-name').html(state)
             $('#district-name').html('')
-            if (values == null) {
-                $('#achart-cont').css('filter', 'blur(4px)');
-                $('#dchart-cont').css('filter', 'blur(4px)');
+            if (values == null || values[0] == null || values[1] == null) {
+                $('#achart-cont').css('filter', 'opacity(1%)');
+                $('#dchart-cont').css('filter', 'opacity(1%)');
+                $('#atableP').css('filter', 'opacity(1%)');
+                $('#dtableP').css('filter', 'opacity(1%)');
+                $('#dchart-cont').html('<h2>Data not Available</h2>');
+                $('#achart-cont').html('<h2>Data not Available</h2>');
+                // $('#dtableP')('<h2>Data not Available</h2>');
+                // $('#dtableP')('<h2>Data not Available</h2>');
+
             }
             else {
                 prev = values[0]
                 next = values[1]
                 placeName = state
 
-                $('#achart-cont').css('filter', 'blur(0px)');
-                $('#dchart-cont').css('filter', 'blur(0px)');
+                $('#achart-cont').css('filter', 'opacity(100%)');
+                $('#dchart-cont').css('filter', 'opacity(100%)');
+                $('#atableP').css('filter', 'opacity(100%)');
+                $('#dtableP').css('filter', 'opacity(100%)');
                 drawChart(placeName, prev, next)
             }
             LAST_PLOTTED = state
@@ -91,18 +100,26 @@ async function plot(state, district) {
             values = await readData(state, district, getCurrentDate())
             $('#state-name').html(state)
             $('#district-name').html(district)
-
-            if (values == null) {
-                $('#achart-cont').css('filter', 'blur(4px)');
-                $('#dchart-cont').css('filter', 'blur(4px)');
+            console.log(values)
+            if (values == null || values[0] == null || values[1] == null) {
+                // $('#achart-cont').css('filter', 'opacity(1%)');
+                // $('#dchart-cont').css('filter', 'opacity(1%)');
+                $('#atableP').css('filter', 'opacity(1%)');
+                $('#dtableP').css('filter', 'opacity(1%)');
+                $('#achart-cont').html('<h2>Data not Available</h2>');
+                $('#dchart-cont').html('<h2>Data not Available</h2>');
+                // $('#dtableP')('<h2>Data not Available</h2>');
+                // $('#dtableP')('<h2>Data not Available</h2>');
             }
             else {
                 prev = values[0]
                 next = values[1]
                 placeName = state + '=>' + district
 
-                $('#achart-cont').css('filter', 'blur(0px)');
-                $('#dchart-cont').css('filter', 'blur(0px)');
+                // $('#achart-cont').css('filter', 'opacity(100%)');
+                // $('#dchart-cont').css('filter', 'opacity(100%)');
+                $('#atableP').css('filter', 'opacity(100%)');
+                $('#dtableP').css('filter', 'opacity(100%)');
                 drawChart(placeName, prev, next)
             }
             LAST_PLOTTED = state
