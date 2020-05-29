@@ -4,10 +4,10 @@ const fs = require('fs')
 const STATE_API_URL = "https://api.covid19india.org/states_daily.json"
 const DISTRICT_API_URL = "https://api.covid19india.org/districts_daily.json"
 const PREDICTION_API_URL = "http://40.76.33.143/predict/"
-const state_codes_file = "../JSON_files/state_codes.json"
-const state_districts_info = "../JSON_files/district_wise_population_india.json"
+const state_codes_file = __dirname + "/../JSON_files/state_codes.json"
+const state_districts_info = __dirname + "/../JSON_files/district_wise_population_india.json"
 
-const DATASETS_DIR = "../Datasets/"
+const DATASETS_DIR = __dirname + "/../Datasets/"
 
 raw_states_and_districts = fs.readFileSync(state_districts_info)
 district_wise_population = JSON.parse(raw_states_and_districts)
@@ -35,7 +35,7 @@ var getCurrentDate = () => {
 }
 
 var createDirectory = (directory) => {
-    fs.mkdir("nice/nice", { recursive: true }, function (err) {
+    fs.mkdir(directory, { recursive: true }, function (err) {
         if (err) {
             if (err.code === "EEXIST") {
                 console.log("Dir already exists. Not creating again!")
@@ -109,7 +109,8 @@ async function prevDistricts(state, district) {
         districtsData = jsonData["districtsDaily"]
         stateObject = districtsData[state]
         districtObject = stateObject[district]
-        required_days = districtObject.slice(Math.max(districtObject.length - DAYS, 1))
+        required_days = districtObject.slice(Math.max(districtObject.length - (DAYS + 1), 1))
+        required_days.pop()
 
         prev_dates = []
         prev_active = []
