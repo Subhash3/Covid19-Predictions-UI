@@ -52,6 +52,7 @@ async function readData(state, district, dt) {
 async function plot(state, district) {
     // Only state is passed
     if (district == undefined || district == null) {
+        var placeName = state
 
         if (LAST_PLOTTED == state) {
             console.log("Same plotted already")
@@ -69,14 +70,13 @@ async function plot(state, district) {
                 $('#dtableP').css('filter', 'opacity(1%)');
                 $('#dchart-cont').html('<h2>Data not Available</h2>');
                 $('#achart-cont').html('<h2>Data not Available</h2>');
-                // $('#dtableP')('<h2>Data not Available</h2>');
-                // $('#dtableP')('<h2>Data not Available</h2>');
+                $('#atitle').html(placeName)
+                $('#dtitle').html(placeName)
 
             }
             else {
                 prev = values[0]
                 next = values[1]
-                placeName = state
 
                 $('#achart-cont').css('filter', 'opacity(100%)');
                 $('#dchart-cont').css('filter', 'opacity(100%)');
@@ -91,6 +91,7 @@ async function plot(state, district) {
     else {
         // State and District are passed
 
+        var placeName = state + '=>' + district
         if (LAST_PLOTTED == district) {
             console.log("Same plotted already")
         }
@@ -102,22 +103,16 @@ async function plot(state, district) {
             $('#district-name').html(district)
             console.log(values)
             if (values == null || values[0] == null || values[1] == null) {
-                // $('#achart-cont').css('filter', 'opacity(1%)');
-                // $('#dchart-cont').css('filter', 'opacity(1%)');
                 $('#atableP').css('filter', 'opacity(1%)');
                 $('#dtableP').css('filter', 'opacity(1%)');
                 $('#achart-cont').html('<h2>Data not Available</h2>');
                 $('#dchart-cont').html('<h2>Data not Available</h2>');
-                // $('#dtableP')('<h2>Data not Available</h2>');
-                // $('#dtableP')('<h2>Data not Available</h2>');
+                $('#atitle').html(placeName)
+                $('#dtitle').html(placeName)
             }
             else {
                 prev = values[0]
                 next = values[1]
-                placeName = state + '=>' + district
-
-                // $('#achart-cont').css('filter', 'opacity(100%)');
-                // $('#dchart-cont').css('filter', 'opacity(100%)');
                 $('#atableP').css('filter', 'opacity(100%)');
                 $('#dtableP').css('filter', 'opacity(100%)');
                 drawChart(placeName, prev, next)

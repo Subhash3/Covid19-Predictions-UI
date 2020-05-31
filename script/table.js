@@ -1,6 +1,6 @@
 function createTable(columns, tableHeadId, titleId) {
 
-    $(tableHeadId).append('<tr>');
+    $(tableHeadId).html('<tr>');
     $(tableHeadId).append('<th>' + columns[0] + '</th>');
     $(tableHeadId).append('<th>' + columns[1] + '</th>');
     $(tableHeadId).append('<th>' + columns[2] + '</th>');
