@@ -71,7 +71,7 @@ body {
   border-radius: 8px;
 }
 
-.map path {
+.mapdiv path {
   fill: #f5d7c5;
   stroke: #5a3535;
   stroke-width: 1px;
@@ -79,29 +79,25 @@ body {
   transition: fill 0.3s;
 }
 
-.map path:hover {
+.mapdiv path:hover {
   fill: #ffaaaa;
   stroke: #ff1111;
   stroke-width: 2px;
 }
 
-.map path.state:hover {
-  cursor: pointer;
+.mapdiv a {
+  text-decoration: none;
 }
 
 .backbtn {
-  display: none;
-  padding: 15px;
-  margin: auto;
-  width: 30%;
+  text-decoration: none;
+  padding: 20px;
+  width: 50%;
+  margin: 2%;
   text-align: center;
   background-color: #333;
   color: white;
-  cursor: pointer;
-}
-
-.backbtn:hover {
-  background-color: #454545;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .states-list {
@@ -123,37 +119,4 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-
-@media screen and (max-width: 480px) {
-  .map-and-graphs {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      /* height: 140vh; */
-      margin: 10px;
-  }
-
-  .backbtn {
-      width: 50%;
-  }
-}
-
-/* tooltip */
-
-#tooltip {
-  position: absolute;
-  display: none;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border:#d3d3d3 solid 1px;
-  background: #fff;
-  color: black;
-  font-family: Comfortaa, Verdana;
-  font-size: smaller;
-  padding: 8px;
-  pointer-events:none;
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
-}
-
 /*# sourceMappingURL=rohan_style.css.map */
