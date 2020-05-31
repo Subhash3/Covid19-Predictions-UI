@@ -39,10 +39,11 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .container .tables {
-  width: 25%;
+  width: 28%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -53,7 +54,7 @@ body {
 }
 
 .container .charts {
-  width: 45%;
+  width: 42%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -179,29 +180,14 @@ svg {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin-bottom: 80vh;
-  }
-  .container .charts {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
   }
   .container .charts .chart-box {
     height: 50vh;
     width: 50vw;
   }
-  .container .tables {
-    width: 10vw;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    border: 1px solid #1d2a8f;
-  }
-  .container .tables .table {
-    width: 50%;
-    border: 1px solid #c24197;
+  .container .tables table {
+    height: 50%;
+    width: 50vw;
   }
   .container .map_container {
     display: -webkit-box;
@@ -222,6 +208,10 @@ svg {
     height: 90%;
     width: 70%;
   }
+  .initiative {
+    position: relative;
+    top: 10%;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -237,9 +227,6 @@ svg {
     -ms-flex-pack: center;
     justify-content: center;
   }
-  .container .tables .table {
-    width: 100vw;
-  }
   .container .charts {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -249,8 +236,21 @@ svg {
     -ms-flex-pack: center;
     justify-content: center;
   }
+  .container .map_container {
+    margin-top: 80px;
+  }
+  .container .tables .table-fill {
+    width: 50vh;
+  }
+  .container .tables .deaths {
+    margin-top: 90px;
+  }
   .container .charts .chart-box {
     width: 100vw;
+  }
+  .initiative {
+    position: relative;
+    top: 30%;
   }
 }
 
