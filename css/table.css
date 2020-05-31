@@ -1,6 +1,6 @@
 
 .table-fill {
-    background: white;
+    /* background: white; */
     border-radius: 5px;
     border-collapse: collapse;
     height: 220px;
@@ -9,7 +9,12 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     animation: float 5s infinite;
 }
-
+caption{
+    font-size: 26px;
+    /* background-color: inherit; */
+    color: #D5DDE5;
+    background: #1b1e24;
+}
 th {
     color: #D5DDE5;
     background: #1b1e24;
@@ -21,6 +26,7 @@ th {
     text-align: left;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     vertical-align: middle;
+    /* height: 100px; */
 }
 
 th:first-child {
