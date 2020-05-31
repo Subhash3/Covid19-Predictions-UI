@@ -1,10 +1,11 @@
-function createTable(columns, tableHeadId) {
+function createTable(columns, tableHeadId, titleId) {
 
-    window.parent.$(tableHeadId).append('<tr>');
-    window.parent.$(tableHeadId).append('<th>' + columns[0] + '</th>');
-    window.parent.$(tableHeadId).append('<th>' + columns[1] + '</th>');
-    window.parent.$(tableHeadId).append('<th>' + columns[2] + '</th>');
-    window.parent.$(tableHeadId).append('</tr>');
+    $(tableHeadId).append('<tr>');
+    $(tableHeadId).append('<th>' + columns[0] + '</th>');
+    $(tableHeadId).append('<th>' + columns[1] + '</th>');
+    $(tableHeadId).append('<th>' + columns[2] + '</th>');
+    $(tableHeadId).append('</tr>');
+    $(titleId).html(columns[3])
 }
 
 function fillTable(tableData, tableBodyId) {
@@ -14,17 +15,18 @@ function fillTable(tableData, tableBodyId) {
     var i = 0
     for (i = 0; i < dates.length; i++) {
 
-        window.parent.$(tableBodyId).append('<tr>');
-        window.parent.$(tableBodyId).append('<td>' + dates[i] + '</td>');
-        window.parent.$(tableBodyId).append('<td>' + col2[i] + '</td>');
-        window.parent.$(tableBodyId).append('<td>' + col3[i] + '</td>');
-        window.parent.$(tableBodyId).append('</tr>');
+        $(tableBodyId).append('<tr>');
+        $(tableBodyId).append('<td>' + dates[i] + '</td>');
+        $(tableBodyId).append('<td>' + col2[i] + '</td>');
+        $(tableBodyId).append('<td>' + col3[i] + '</td>');
+        $(tableBodyId).append('</tr>');
         // console.log(dates[i])
     }
 }
-function clearTable(tableBodyId, tableHeadId) {
-    window.parent.$(tableHeadId).html('')
-    window.parent.$(tableBodyId).html('')
+function clearTable(tableBodyId, tableHeadId, titleId) {
+    $(tableHeadId).html('')
+    $(tableBodyId).html('')
+    $(titleId).html("");
 }
 
 // p = ["2020-05-20", "2020-05-21", "2020-05-22", "2020-05-23", "2020-05-24", "2020-05-25", "2020-05-26"]

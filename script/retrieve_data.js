@@ -167,12 +167,12 @@ function drawChart(placename, prev, next) {
     prev_deaths = prev[2]
     next_deaths = next[2]
 
-    clearTable('#atableH', '#atableP')
-    clearTable('#dtableH', '#dtableP')
-    createTable(['Date', 'Active', 'Deceased'], '#atableH')
+    clearTable('#atableH', '#atableP', '#atitle')
+    clearTable('#dtableH', '#dtableP', '#dtitle')
+    createTable(['Date', 'Active', 'Deceased', placename], '#atableH', '#atitle')
+    createTable(['Date', 'Forecasted Active', 'Forecasted Deceased', placename], '#dtableH', '#dtitle')
     fillTable([prev_dates, prev_active, prev_deaths], '#atableP')
     fillTable([next_dates, next_active, next_deaths], '#dtableP')
-
     p_len = prev_dates.length
 
     //Next 3 lines to connect acitve and predicted lines in graph
@@ -216,7 +216,6 @@ function drawChart(placename, prev, next) {
     max_dead = scaleYaxis(max_dead)
 
     clearGraph()
-    createTable(['Date', 'Active', 'Deceased'], '#dtableH')
     activeChart(placename, dates, prev_active, next_active, max_act)
     deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
 
