@@ -109,8 +109,9 @@ async function prevDistricts(state, district) {
         districtsData = jsonData["districtsDaily"]
         stateObject = districtsData[state]
         districtObject = stateObject[district]
-        required_days = districtObject.slice(Math.max(districtObject.length - (DAYS + 1), 1))
-        required_days.pop()
+        required_days = districtObject.slice(Math.max(districtObject.length - (DAYS), 1))
+        // required_days = districtObject.slice(Math.max(districtObject.length - (DAYS + 1), 1))
+        // required_days.pop()
 
         prev_dates = []
         prev_active = []
