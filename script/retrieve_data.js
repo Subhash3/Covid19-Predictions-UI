@@ -165,7 +165,7 @@ function drawChart(placename, prev, next) {
     clearTable('#atableH', '#atableP', '#atitle')
     clearTable('#dtableH', '#dtableP', '#dtitle')
     createTable(['Date', 'Active', 'Deceased', placename], '#atableH', '#atitle')
-    createTable(['Date', 'Forecasted Active', 'Forecasted Deceased', placename], '#dtableH', '#dtitle')
+    createTable(['Date', 'Forecasted Active', 'Forecasted Deceased',], '#dtableH', '#dtitle')
     fillTable([prev_dates, prev_active, prev_deaths], '#atableP')
     fillTable([next_dates, next_active, next_deaths], '#dtableP')
     p_len = prev_dates.length
