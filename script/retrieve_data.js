@@ -301,7 +301,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
     var options = {
         title: {
             display: true,
-            text: place + ' Active cases Predictions(next 7 days)'
+            text: place + ' Active cases Forecast(next 7 days)'
         },
         maintainAspectRatio: false,
         responsive: true,
@@ -384,7 +384,7 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
     var options = {
         title: {
             display: true,
-            text: place + ' Deceased Predictions(next 7 days)'
+            text: place + ' Deceased Forecast(next 7 days)'
         },
         maintainAspectRatio: false,
         responsive: true,
