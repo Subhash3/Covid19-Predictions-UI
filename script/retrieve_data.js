@@ -278,7 +278,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
             spanGaps: true,
         },
         {
-            label: "Predicted",
+            label: "Forecast",
             fill: false,
             lineTension: 0.3,
             borderColor: "orange",
@@ -361,7 +361,7 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
             data: prev_deaths,
             spanGaps: true,
         }, {
-            label: "Predicted",
+            label: "Forecast",
             fill: false,
             lineTension: 0.3,
             borderColor: 'rgb(97, 27, 45)',
