@@ -1,6 +1,7 @@
 const fetch = require('node-fetch')
 const fs = require('fs')
 
+DAYS = 2
 const STATE_API_URL = "https://api.covid19india.org/states_daily.json"
 const DISTRICT_API_URL = "https://api.covid19india.org/districts_daily.json"
 const PREDICTION_API_URL = "http://40.76.33.143/predict/"
@@ -113,7 +114,7 @@ async function collectData(state, districtName) {
     else {
         predictions = todayvalues[1]
         var i = 0
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < DAYS; i++) {
             date = getOldDate(i + 1)
             oldvalues = await readData(state, districtName, date)
             oldpred = oldvalues[1]
