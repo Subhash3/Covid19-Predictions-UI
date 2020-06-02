@@ -7,7 +7,7 @@ const PREDICTION_API_URL = "http://40.76.33.143/predict/"
 const state_codes_file = __dirname + "/../JSON_files/state_codes.json"
 const state_districts_info = __dirname + "/../JSON_files/district_wise_population_india.json"
 
-const DATASETS_DIR = __dirname + "/../Datasets/"
+const DATASETS_DIR = __dirname + "/../Datasets2/"
 
 raw_states_and_districts = fs.readFileSync(state_districts_info)
 district_wise_population = JSON.parse(raw_states_and_districts)
@@ -24,58 +24,6 @@ Object.keys(invertedStateCodes).forEach((code => {
 
 DAYS = 7
 
-var getCurrentDate = () => {
-    let date_ob = new Date();
-
-    let date = ("0" + date_ob.getDate()).slice(-2);
-    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-    let year = date_ob.getFullYear();
-
-    return year + "-" + month + "-" + date
-}
-
-var createDirectory = (directory) => {
-    fs.mkdir(directory, { recursive: true }, function (err) {
-        if (err) {
-            if (err.code === "EEXIST") {
-                console.log("Dir already exists. Not creating again!")
-            } else {
-                console.error(err)
-                exit(1)
-            }
-        } else {
-            console.log("New directory successfully created.")
-        }
-    })
-}
-
-var createFileName = (state, district) => {
-    stateName = state.split(' ').join('-')
-    filename = DATASETS_DIR + stateName
-
-    if (!(district == undefined)) {
-        districtName = district.split(' ').join('-')
-        filename = filename + '-' + districtName
-    }
-
-    currentdate = getCurrentDate()
-    filename = filename + '-' + currentdate + '.json'
-
-    return filename
-}
-
-var writeJSONtoFile = (jsonObject, filename) => {
-    var jsonContent = JSON.stringify(jsonObject);
-
-    fs.writeFile(filename, jsonContent, 'utf8', function (err) {
-        if (err) {
-            console.log("An error occured while writing JSON Object to File.");
-            return console.log(err);
-        }
-
-        console.log("JSON file " + filename + " has been saved.");
-    });
-}
 
 function changeDateFormat(date_str) {
     var months = {
@@ -128,9 +76,6 @@ async function prevDistricts(state, district) {
 }
 
 async function nextDistricts(state, district) {
-    // PREDICTION_API = new URL(PREDICTION_API_URL)
-    // PREDICTION_API.searchParams.append("state", state)
-    // PREDICTION_API.searchParams.append("district", district)
 
     PREDICTION_API = PREDICTION_API_URL + '?state=' + state + '&district=' + district
 
@@ -210,9 +155,6 @@ async function prevStates(state) {
 }
 
 async function nextStates(state) {
-    // PREDICTION_API = new URL(PREDICTION_API_URL)
-    // PREDICTION_API.searchParams.append("state", state)
-
     PREDICTION_API = PREDICTION_API_URL + '?state=' + state
 
     try {
@@ -236,40 +178,129 @@ async function nextStates(state) {
         console.log("Error: " + err)
     }
 }
+var getCurrentDate = () => {
+    let date_ob = new Date();
 
-var fetchAllAPIs = async (filename, state, district) => {
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+
+    return year + "-" + month + "-" + date
+}
+
+var createDirectory = (directory) => {
+    fs.mkdir(directory, { recursive: true }, function (err) {
+        if (err) {
+            if (err.code === "EEXIST") {
+                console.log("Dir already exists. Not creating again!")
+            } else {
+                console.error(err)
+                exit(1)
+            }
+        } else {
+            console.log("New directory successfully created.")
+        }
+    })
+}
+
+function createFileName(state, district, date) {
+    stateName = state.split(' ').join('-')
+    var filename = DATASETS_DIR + stateName
+
+    if (!(district == undefined)) {
+        districtName = district.split(' ').join('-')
+        filename = filename + '-' + districtName
+    }
+
+    filename = filename + '-' + date + '.json'
+
+    return filename
+}
+
+var writeJSONtoFile = (jsonObject, filename) => {
+    var jsonContent = JSON.stringify(jsonObject);
+
+    fs.writeFile(filename, jsonContent, 'utf8', function (err) {
+        if (err) {
+            console.log("An error occured while writing JSON Object to File.");
+            return console.log(err);
+        }
+
+        console.log("JSON file " + filename + " has been saved.");
+    });
+}
+
+async function readData(state, district, dt) {
+    filename = createFileName(state, district, dt)
+    console.log('reading..', district, dt)
+    try {
+
+        jsonData = fs.readFileSync(filename)
+        jsonData = JSON.parse(jsonData)
+        return jsonData
+    }
+    catch (err) {
+        console.log('Error reading file', err)
+    }
+}
+
+
+function getOldDate(days) {
+    var date = new Date();
+    var date_ob = new Date(date.getTime() - (days * 24 * 60 * 60 * 1000));
+    // var day =last.getDate();
+    // var month=last.getMonth()+1;
+    // var year=last.getFullYear();
+    let day = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    var olddate = year + "-" + month + "-" + day
+    return olddate
+}
+
+var fetchAllAPIs = async (state, district) => {
     // Only state is passed
+
+    prev = []
+    next = []
     if (district == undefined || district == null) {
         // console.log(state)
         prev = await prevStates(state)
         next = await nextStates(state)
-        values = [prev, next]
-        // console.log(values)
 
-        writeJSONtoFile(values, filename)
     }
     else {
         prev = await prevDistricts(state, district)
         next = await nextDistricts(state, district)
-        values = [prev, next]
-
-        writeJSONtoFile(values, filename)
+        // values = [prev, next]
     }
-}
+    console.log('fetched yesterday', district)
+    today_pred = next
 
-// state = "Chhattisgarh"
-// filename = createFileName(state)
-// fetchAllAPIs(filename, state)
+    yest_values = await readData(state, district, getOldDate(1))
+    // console.log(yest_values)
+    yest_pred = yest_values[1]
+
+    dates = yest_pred[0]
+    days = dates.length
+
+    for (i = 0; i < 3; i++) {
+        today_pred[i] = yest_pred[i].slice(0, days - 6).concat(today_pred[i])
+    }
+
+    values = [prev, today_pred]
+    filename = createFileName(state, district, getCurrentDate())
+    writeJSONtoFile(values, filename)
+
+}
 
 saveData = async () => {
     for (state in district_wise_population) {
-        filename = createFileName(state)
         await fetchAllAPIs(filename, state)
         allDistrictObjects = district_wise_population[state]["districts"]
         for (i = 0; i < allDistrictObjects.length; i++) {
             districtObject = allDistrictObjects[i]
             districtName = districtObject["districtName"]
-            filename = createFileName(state, districtName)
             await fetchAllAPIs(filename, state, districtObject["districtName"])
         }
     }

@@ -139,17 +139,15 @@ async function collectData(state, districtName) {
 
 changeFormat = async () => {
     for (state in district_wise_population) {
-        // filename = createFileName(state, getCurrentDate())
         await collectData(state)
         allDistrictObjects = district_wise_population[state]["districts"]
         for (i = 0; i < allDistrictObjects.length; i++) {
             districtObject = allDistrictObjects[i]
             districtName = districtObject["districtName"]
-            // filename = createFileName(state, districtName, getCurrentDate())
             await collectData(state, districtObject["districtName"])
         }
     }
 }
 
 
-// changeFormat()
+changeFormat()
