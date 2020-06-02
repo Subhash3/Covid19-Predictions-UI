@@ -225,6 +225,7 @@ svg {
     margin-bottom: 150vh;
   }
   .container .tables {
+    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -234,6 +235,7 @@ svg {
     justify-content: center;
   }
   .container .charts {
+    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -293,4 +295,28 @@ svg {
   font-weight: 200;
   padding-bottom: 30px;
 }
+
+@media screen and (max-width: 450px) {
+  .heading {
+    padding-bottom: 10px;
+  }
+
+  .side.heading {
+    padding-bottom: 10px;
+  }
+
+  .container .map_container {
+    padding: 5px;
+  }
+
+  .container .map_container .map {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .backbtn {
+    bottom: 0px;
+  }
+}
+
 /*# sourceMappingURL=sample.css.map */
