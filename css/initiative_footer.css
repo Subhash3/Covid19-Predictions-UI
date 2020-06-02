@@ -44,6 +44,16 @@
   left: 70%;
 }
 
+@media screen and (max-width: 450px) {
+  .initiative::before {
+    width: 100px;
+  }
+
+  .initiative::after {
+    width: 100px;
+  }
+}
+
 .initiative span {
   margin: 3px 0;
 }

@@ -78,6 +78,11 @@
         padding: 10px 0;
         box-shadow: 1px 1px 5px black;
     }
+
+    .menu div:last-child{
+        margin-right: 0px;
+    }
+
     .menu .logo{
         position: relative;
     }

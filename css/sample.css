@@ -225,6 +225,7 @@ svg {
     margin-bottom: 150vh;
   }
   .container .tables {
+    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -234,6 +235,7 @@ svg {
     justify-content: center;
   }
   .container .charts {
+    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
