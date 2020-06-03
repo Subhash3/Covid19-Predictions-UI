@@ -10,11 +10,17 @@ body{
 .abstract-text{
     position: relative;
     width: 80%;
-    height: 100vh;
+    height: 130vh;
     top: 100px;
     letter-spacing: 1px;
     font-size: 18px;
     line-height: 30px;
+}
+
+.abstract-text .reference{
+    margin-top: 30px;
+    font-size: 12px;
+    width: 50%;
 }
 
 .abstract-text h3{
@@ -28,13 +34,13 @@ body{
     bottom: 0px;
 }
 
-@media screen and (max-width: 850px){
+@media screen and (max-width: 1050px){
     body{
         /* background: pink; */
     }
 
     .abstract-text{
-        height: 120vh;
+        height: 170vh;
     }
 }
 
@@ -44,6 +50,6 @@ body{
     }
 
     .abstract-text{
-        height: 180vh;
+        height: 230vh;
     }
 }
