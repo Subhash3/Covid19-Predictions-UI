@@ -208,8 +208,8 @@ function createFileName(state, district, date) {
     var filename = DATASETS_DIR + stateName
 
     if (!(district == undefined)) {
-        districtName = district.split(' ').join('-')
-        filename = filename + '-' + districtName
+        districtNam = district.split(' ').join('-')
+        filename = filename + '-' + districtNam
     }
 
     filename = filename + '-' + date + '.json'
@@ -232,7 +232,7 @@ var writeJSONtoFile = (jsonObject, filename) => {
 
 async function readData(state, district, dt) {
     filename = createFileName(state, district, dt)
-    console.log('reading..', district, dt)
+    // console.log('reading..', state, district, dt)
     try {
 
         jsonData = fs.readFileSync(filename)
@@ -240,7 +240,8 @@ async function readData(state, district, dt) {
         return jsonData
     }
     catch (err) {
-        console.log('Error reading file', err)
+        console.log('Error reading file', state, district, dt)
+        // console.log(err)
     }
 }
 
@@ -274,36 +275,45 @@ var fetchAllAPIs = async (state, district) => {
         next = await nextDistricts(state, district)
         // values = [prev, next]
     }
-    console.log('fetched yesterday', district)
+    // console.log('fetched today', state, district)
     today_pred = next
 
     yest_values = await readData(state, district, getOldDate(1))
-    // console.log(yest_values)
-    yest_pred = yest_values[1]
+    if (yest_values != null && yest_values[0] != null && yest_values[1] != null) {
+        // console.log('Fetched yesterday')
+        yest_pred = yest_values[1]
 
-    dates = yest_pred[0]
-    days = dates.length
+        dates = yest_pred[0]
+        days = dates.length
 
-    for (i = 0; i < 3; i++) {
-        today_pred[i] = yest_pred[i].slice(0, days - 6).concat(today_pred[i])
+        for (j = 0; j < 3; j++) {
+            today_pred[j] = yest_pred[j].slice(0, days - 6).concat(today_pred[j])
+        }
+
+        values = [prev, today_pred]
+        filename = createFileName(state, district, getCurrentDate())
+        writeJSONtoFile(values, filename)
+
     }
-
-    values = [prev, today_pred]
-    filename = createFileName(state, district, getCurrentDate())
-    writeJSONtoFile(values, filename)
-
+    else {
+        console.log("Error fetching yest...", state, district)
+    }
 }
+
 
 saveData = async () => {
     for (state in district_wise_population) {
-        await fetchAllAPIs(filename, state)
+        await fetchAllAPIs(state)
         allDistrictObjects = district_wise_population[state]["districts"]
         for (i = 0; i < allDistrictObjects.length; i++) {
             districtObject = allDistrictObjects[i]
             districtName = districtObject["districtName"]
-            await fetchAllAPIs(filename, state, districtObject["districtName"])
+            await fetchAllAPIs(state, districtObject["districtName"])
         }
     }
 }
 
+
 saveData()
+// fetchAllAPIs("Andhra Pradesh", "Y.S.R. Kadapa")
+// fetchAllAPIs("Andhra Pradesh", "Krishna")

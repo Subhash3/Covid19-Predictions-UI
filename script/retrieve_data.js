@@ -324,6 +324,11 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
         },
         layout: {
             padding: 30
+        },
+        tooltips: {
+
+            mode: 'x',
+            intersect : false
         }
     };
 
@@ -407,6 +412,11 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
         },
         layout: {
             padding: 30
+        },
+        tooltips: {
+
+            mode: 'x',
+            intersect : false
         }
     };
 
