@@ -274,7 +274,7 @@ var fetchAllAPIs = async (state, district) => {
         next = await nextDistricts(state, district)
         // values = [prev, next]
     }
-    console.log('fetched yesterday', district)
+    console.log('fetched yesterday', state, district)
     today_pred = next
 
     yest_values = await readData(state, district, getOldDate(1))
@@ -296,12 +296,12 @@ var fetchAllAPIs = async (state, district) => {
 
 saveData = async () => {
     for (state in district_wise_population) {
-        await fetchAllAPIs(filename, state)
+        await fetchAllAPIs(state)
         allDistrictObjects = district_wise_population[state]["districts"]
         for (i = 0; i < allDistrictObjects.length; i++) {
             districtObject = allDistrictObjects[i]
             districtName = districtObject["districtName"]
-            await fetchAllAPIs(filename, state, districtObject["districtName"])
+            await fetchAllAPIs(state, districtObject["districtName"])
         }
     }
 }
