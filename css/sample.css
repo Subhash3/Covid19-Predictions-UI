@@ -51,6 +51,8 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .container .charts {
@@ -66,7 +68,7 @@ body {
 
 .container .tables .active {
   width: 100%;
-  height: 50%;
+  height: 40%;
   background: #f0f0ee;
 }
 
@@ -96,7 +98,8 @@ body {
 
 .container .tables .deaths {
   width: 100%;
-  height: 50%;
+  height: 60%;
+  overflow: auto;
   background: #dddddd;
 }
 
