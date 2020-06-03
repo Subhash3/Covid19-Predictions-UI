@@ -105,6 +105,13 @@ body {
   width: 100%;
   height: 100%;
   margin-top: 40px;
+
+  /* double click wont highlight text */
+  -webkit-user-select: none;        
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  -o-user-select: none;
+  user-select: none;    
 }
 
 svg {
@@ -132,6 +139,12 @@ svg {
   stroke-width: 1px;
   -webkit-transition: fill 0.3s;
   transition: fill 0.3s;
+}
+
+.map path.fixed {
+  fill: #ffaaaa;
+  stroke: #ff1111;
+  stroke-width: 2px;
 }
 
 .map path:hover {
