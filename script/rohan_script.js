@@ -14,8 +14,10 @@ document.head.appendChild(imported);
 var main_heading = document.querySelector('#main_heading');
 var side_heading = document.querySelector('#side_heading');
 
+// fixed state / district id
+var fixed_id = "";
 
-// displays states when clicked
+// displays states when double clicked
 function view_state(evt, state) {
     document.getElementById("India").style.display = "none";
 
@@ -27,15 +29,15 @@ function view_state(evt, state) {
     backbtn.name = disp_state; // temporarily maintaining which state is selected
 
     main_heading.innerHTML = state.id;
-}
 
-// plot function
-function plot(state, district) {
-    console.log(state, district);
-    // plotGraph(state, district)
-    plot(state, district)
+    if (fixed_id != '') {
+        var unfix_id = document.getElementById(fixed_id);
+        var unfix    = unfix_id.getAttribute('class');
+        unfix = unfix.replace(' fixed', '');
+        unfix_id.setAttribute('class', unfix);
+        fixed_id = '';
+    }
 }
-
 
 // back to India map from state
 function back(buttonObj) {
@@ -46,12 +48,55 @@ function back(buttonObj) {
     buttonObj.name = "";
 
     main_heading.innerHTML = "India"
+
+    if (fixed_id != '') {
+        var unfix_id = document.getElementById(fixed_id);
+        var unfix    = unfix_id.getAttribute('class');
+        unfix = unfix.replace(' fixed', '');
+        unfix_id.setAttribute('class', unfix);
+        fixed_id = '';
+    }
 }
 
 // tooltips and headings
 var tooltip = document.querySelector('#tooltip');
 
 [].forEach.call(document.querySelectorAll('path'), function(item) {
+    item.addEventListener('click', function() {
+        var temp = this.getAttribute('class');
+        console.log(temp);
+
+        if (temp == null || temp.indexOf(' fixed') == -1){
+            temp += ' fixed';
+            this.setAttribute('class', temp);
+
+            if (fixed_id != '') {
+                var unfix_id = document.getElementById(fixed_id);
+                var unfix    = unfix_id.getAttribute('class');
+                unfix = unfix.replace(' fixed', '');
+                unfix_id.setAttribute('class', unfix);
+                fixed_id = '';
+
+                // states 
+                if (this.parentNode.id == '') {
+                    plot(this.id, null);
+                }
+                else {
+                    var state = this.parentNode.id;
+                    state     = state.replace(' districts', '');
+                    var dist  = this.id;
+                    plot(state, dist);
+                }
+            }
+            fixed_id = this.id;
+        }        
+        else {
+            temp = temp.replace(' fixed', '');
+            this.setAttribute('class', temp);
+            fixed_id = "";
+        }
+    }); 
+
     item.addEventListener('mouseenter', function(event) {
         tooltip.innerHTML = this.id;
         tooltip.style.display = 'block';

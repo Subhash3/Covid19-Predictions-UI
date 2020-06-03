@@ -50,6 +50,12 @@ async function readData(state, district, dt) {
 
 
 async function plot(state, district) {
+
+    // if some state fixed, womt plot
+    if (fixed_id != "") {
+        return false;
+    }
+
     // Only state is passed
     if (district == undefined || district == null) {
         var placeName = state
@@ -416,3 +422,5 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
         options: options
     });
 }
+
+
