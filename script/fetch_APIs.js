@@ -240,7 +240,8 @@ async function readData(state, district, dt) {
         return jsonData
     }
     catch (err) {
-        console.log('Error reading file', err)
+        console.log('Error reading file', state, district, dt)
+        // console.log(err)
     }
 }
 
