@@ -7,7 +7,7 @@ const PREDICTION_API_URL = "http://40.76.33.143/predict/"
 const state_codes_file = __dirname + "/../JSON_files/state_codes.json"
 const state_districts_info = __dirname + "/../JSON_files/district_wise_population_india.json"
 
-const DATASETS_DIR = __dirname + "/../Datasets2/"
+const DATASETS_DIR = __dirname + "/../Datasets/"
 
 raw_states_and_districts = fs.readFileSync(state_districts_info)
 district_wise_population = JSON.parse(raw_states_and_districts)

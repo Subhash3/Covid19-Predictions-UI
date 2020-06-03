@@ -68,7 +68,7 @@ body {
 
 .container .tables .active {
   width: 100%;
-  height: 40%;
+  height: 50%;
   background: #f0f0ee;
 }
 
@@ -98,7 +98,7 @@ body {
 
 .container .tables .deaths {
   width: 100%;
-  height: 60%;
+  height: 50%;
   overflow: auto;
   background: #dddddd;
 }
