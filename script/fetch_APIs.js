@@ -24,6 +24,19 @@ Object.keys(invertedStateCodes).forEach((code => {
 
 DAYS = 7
 
+function getDate(){
+
+    var d = new Date();
+
+    machine_hours = d.getHours()
+    utc_hours = d.getUTCHours()
+
+    if (machine_hours == utc_hours) {
+        d = new Date(d.getTime() + (5.5 * 60 * 60 * 1000));
+    }
+
+    return d
+}
 
 function changeDateFormat(date_str) {
     var months = {
@@ -179,7 +192,7 @@ async function nextStates(state) {
     }
 }
 var getCurrentDate = () => {
-    let date_ob = new Date();
+    let date_ob = getDate();
 
     let date = ("0" + date_ob.getDate()).slice(-2);
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
@@ -247,7 +260,7 @@ async function readData(state, district, dt) {
 
 
 function getOldDate(days) {
-    var date = new Date();
+    var date = getDate();
     var date_ob = new Date(date.getTime() - (days * 24 * 60 * 60 * 1000));
     // var day =last.getDate();
     // var month=last.getMonth()+1;
@@ -300,7 +313,6 @@ var fetchAllAPIs = async (state, district) => {
     }
 }
 
-
 saveData = async () => {
     for (state in district_wise_population) {
         await fetchAllAPIs(state)
@@ -315,5 +327,6 @@ saveData = async () => {
 
 
 saveData()
-// fetchAllAPIs("Andhra Pradesh", "Y.S.R. Kadapa")
-// fetchAllAPIs("Andhra Pradesh", "Krishna")
+
+// console.log(getCurrentDate())
+// console.log(getOldDate(2))

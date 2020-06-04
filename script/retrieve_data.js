@@ -3,8 +3,22 @@ LAST_PLOTTED = ""
 
 // const fs = require('fs')
 
+function getDate() {
+
+    var d = new Date();
+
+    machine_hours = d.getHours()
+    utc_hours = d.getUTCHours()
+
+    if (machine_hours == utc_hours) {
+        d = new Date(d.getTime() + (5.5 * 60 * 60 * 1000));
+    }
+
+    return d
+}
+
 function getCurrentDate() {
-    let date_ob = new Date();
+    let date_ob = getDate();
 
     let date = ("0" + date_ob.getDate()).slice(-2);
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
