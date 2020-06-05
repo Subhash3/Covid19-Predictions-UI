@@ -18,7 +18,7 @@ var side_heading = document.querySelector('#side_heading');
 var fixed_id = "";
 
 // displays states when double clicked
-function view_state(evt, state) {
+function view_state(state) {
     document.getElementById("India").style.display = "none";
 
     var disp_state = state.id+ " districts";
@@ -31,11 +31,7 @@ function view_state(evt, state) {
     main_heading.innerHTML = state.id;
 
     if (fixed_id != '') {
-        var unfix_id = document.getElementById(fixed_id);
-        var unfix    = unfix_id.getAttribute('class');
-        unfix = unfix.replace(' fixed', '');
-        unfix_id.setAttribute('class', unfix);
-        fixed_id = '';
+        unfix_state();
     }
 }
 
@@ -50,15 +46,46 @@ function back(buttonObj) {
     main_heading.innerHTML = "India"
 
     if (fixed_id != '') {
-        var unfix_id = document.getElementById(fixed_id);
-        var unfix    = unfix_id.getAttribute('class');
-        unfix = unfix.replace(' fixed', '');
-        unfix_id.setAttribute('class', unfix);
-        fixed_id = '';
+        unfix_state();
     }
 }
 
-// tooltips and headings
+// unfix state
+function unfix_state() {
+    var unfix_id = document.getElementById(fixed_id);
+    var unfix    = unfix_id.getAttribute('class');
+    unfix = unfix.replace(' fixed', '');
+    unfix_id.setAttribute('class', unfix);
+    fixed_id = '';
+}
+
+
+// seperate click and double click
+var timer = 0;
+var delay = 200;
+var prevent = false;
+
+[].forEach.call(document.querySelectorAll('.india_state'), function(item) {
+    item.addEventListener('click', function() {
+        timer = setTimeout(function() {
+            if (!prevent) {
+            //   doClickAction();
+            //   already defined in next block of code
+            //   this just to make sure double click event
+            //   is not confused with 2 single clicks
+            }
+            prevent = false;
+        }, delay);
+    })
+
+    item.addEventListener('dblclick', function() {
+        clearTimeout(timer);
+        prevent = true;
+        view_state(this);
+    })
+});
+
+// tooltips, headings and fixing states/districts
 var tooltip = document.querySelector('#tooltip');
 
 [].forEach.call(document.querySelectorAll('path'), function(item) {
@@ -71,11 +98,7 @@ var tooltip = document.querySelector('#tooltip');
             this.setAttribute('class', temp);
 
             if (fixed_id != '') {
-                var unfix_id = document.getElementById(fixed_id);
-                var unfix    = unfix_id.getAttribute('class');
-                unfix = unfix.replace(' fixed', '');
-                unfix_id.setAttribute('class', unfix);
-                fixed_id = '';
+                unfix_state();
 
                 // states 
                 if (this.parentNode.id == '') {
