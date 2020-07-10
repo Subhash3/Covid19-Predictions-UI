@@ -54,7 +54,6 @@ body {
   display: block;
   color: white;
   text-align: center;
-  margin: 0 47%;
   top: 10%;
   font-size: 16px;
   font-family: 'Courier New', Courier, monospace;
@@ -84,16 +83,9 @@ body {
   position: relative;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
-      grid-template-columns: repeat(4, 1fr);
+  -ms-grid-columns: auto auto auto auto;
+      grid-template-columns: auto auto auto auto;
   height: 100%;
-  justify-items: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  /* width: 60%; */
-  /* float: right; */
-  /* border: 1px solid white; */
 }
 
 .developers .developer {
@@ -108,7 +100,6 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border: 0px solid white;
   margin: 100px 30px 10px 10px;
   width: 170px;
   height: 230px;

@@ -30,7 +30,7 @@
   content: '';
   position: absolute;
   height: 2px;
-  width: 300px;
+  width: 20vw;
   background: #fff;
   right: 70%;
 }
@@ -39,19 +39,9 @@
   content: '';
   position: absolute;
   height: 2px;
-  width: 300px;
+  width: 20vw;
   background: #fff;
   left: 70%;
-}
-
-@media screen and (max-width: 450px) {
-  .initiative::before {
-    width: 100px;
-  }
-
-  .initiative::after {
-    width: 100px;
-  }
 }
 
 .initiative span {

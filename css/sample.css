@@ -51,8 +51,6 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .container .charts {
@@ -99,7 +97,6 @@ body {
 .container .tables .deaths {
   width: 100%;
   height: 50%;
-  overflow: auto;
   background: #dddddd;
 }
 
@@ -108,13 +105,6 @@ body {
   width: 100%;
   height: 100%;
   margin-top: 40px;
-
-  /* double click wont highlight text */
-  -webkit-user-select: none;        
-  -moz-user-select: none; 
-  -ms-user-select: none; 
-  -o-user-select: none;
-  user-select: none;    
 }
 
 svg {
@@ -142,12 +132,6 @@ svg {
   stroke-width: 1px;
   -webkit-transition: fill 0.3s;
   transition: fill 0.3s;
-}
-
-.map path.fixed {
-  fill: #ffaaaa;
-  stroke: #ff1111;
-  stroke-width: 2px;
 }
 
 .map path:hover {
@@ -241,7 +225,6 @@ svg {
     margin-bottom: 150vh;
   }
   .container .tables {
-    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -251,7 +234,6 @@ svg {
     justify-content: center;
   }
   .container .charts {
-    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -311,28 +293,4 @@ svg {
   font-weight: 200;
   padding-bottom: 30px;
 }
-
-@media screen and (max-width: 450px) {
-  .heading {
-    padding-bottom: 10px;
-  }
-
-  .side.heading {
-    padding-bottom: 10px;
-  }
-
-  .container .map_container {
-    padding: 5px;
-  }
-
-  .container .map_container .map {
-    margin-top: 20px;
-    width: 100%;
-  }
-
-  .backbtn {
-    bottom: 0px;
-  }
-}
-
 /*# sourceMappingURL=sample.css.map */
