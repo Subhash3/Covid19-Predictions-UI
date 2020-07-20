@@ -24,7 +24,7 @@ Object.keys(invertedStateCodes).forEach((code => {
 
 DAYS = 7
 
-function getDate(){
+function getDate() {
 
     var d = new Date();
 

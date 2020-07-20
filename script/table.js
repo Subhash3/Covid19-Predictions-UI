@@ -2,21 +2,26 @@ function createTable(columns, tableHeadId, titleId) {
 
     $(tableHeadId).html('<tr>');
     $(tableHeadId).append('<th>' + columns[0] + '</th>');
+    $(tableHeadId).append('<th>' + columns[3] + '</th>');
     $(tableHeadId).append('<th>' + columns[1] + '</th>');
     $(tableHeadId).append('<th>' + columns[2] + '</th>');
     $(tableHeadId).append('</tr>');
-    $(titleId).html(columns[3])
+    $(titleId).html(columns[4])
 }
 
 function fillTable(tableData, tableBodyId) {
-    dates = tableData[0]
+    console.log(tableData)
+	console.log(tableBodyId)
+	dates = tableData[0]
     col2 = tableData[1]
     col3 = tableData[2]
+    col4 = tableData[3]
     var i = 0
     for (i = 0; i < dates.length; i++) {
 
         $(tableBodyId).append('<tr>');
         $(tableBodyId).append('<td>' + dates[i] + '</td>');
+        $(tableBodyId).append('<td>' + col4[i] + '</td>');
         $(tableBodyId).append('<td>' + col2[i] + '</td>');
         $(tableBodyId).append('<td>' + col3[i] + '</td>');
         $(tableBodyId).append('</tr>');

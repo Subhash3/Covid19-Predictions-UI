@@ -3,22 +3,8 @@ LAST_PLOTTED = ""
 
 // const fs = require('fs')
 
-function getDate() {
-
-    var d = new Date();
-
-    machine_hours = d.getHours()
-    utc_hours = d.getUTCHours()
-
-    if (machine_hours == utc_hours) {
-        d = new Date(d.getTime() + (5.5 * 60 * 60 * 1000));
-    }
-
-    return d
-}
-
 function getCurrentDate() {
-    let date_ob = getDate();
+    let date_ob = new Date();
 
     let date = ("0" + date_ob.getDate()).slice(-2);
     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
@@ -64,12 +50,6 @@ async function readData(state, district, dt) {
 
 
 async function plot(state, district) {
-
-    // if some state fixed, womt plot
-    if (fixed_id != "") {
-        return false;
-    }
-
     // Only state is passed
     if (district == undefined || district == null) {
         var placeName = state
@@ -80,7 +60,7 @@ async function plot(state, district) {
         else {
             console.log("Plotting....", state);
             values = await readData(state, district, getCurrentDate())
-            // console.log(values)
+            console.log(values)
             $('#state-name').html(state)
             $('#district-name').html('')
             if (values == null || values[0] == null || values[1] == null) {
@@ -93,7 +73,6 @@ async function plot(state, district) {
                 $('#atitle').html(placeName)
                 $('#dtitle').html(placeName)
 
-                console.log('Plot failed')
             }
             else {
                 prev = values[0]
@@ -122,7 +101,7 @@ async function plot(state, district) {
             values = await readData(state, district, getCurrentDate())
             $('#state-name').html(state)
             $('#district-name').html(district)
-            // console.log(values)
+            console.log(values)
             if (values == null || values[0] == null || values[1] == null) {
                 $('#atableP').css('filter', 'opacity(1%)');
                 $('#dtableP').css('filter', 'opacity(1%)');
@@ -136,7 +115,6 @@ async function plot(state, district) {
                 next = values[1]
                 $('#atableP').css('filter', 'opacity(100%)');
                 $('#dtableP').css('filter', 'opacity(100%)');
-
                 drawChart(placeName, prev, next)
             }
             LAST_PLOTTED = state
@@ -173,27 +151,8 @@ function scaleYaxis(max_elem) {
     }
 
 }
-function max_element(arr1, arr2)
-{
-    max = 0
-
-    for ( i = 0; i < arr1.length; i++ )
-    {
-        if ( arr1[i] > max)
-            max = arr1[i] 
-    }
-
-    for ( i = 0; i < arr2.length; i++ )
-    {
-        if ( arr2[i] > max)
-            max = arr2[i] 
-    }
-
-    return max
-}
-
-
 function drawChart(placename, prev, next) {
+    var i;
     prev_dates = prev[0]
     next_dates = next[0]
 
@@ -203,36 +162,64 @@ function drawChart(placename, prev, next) {
     prev_deaths = prev[2]
     next_deaths = next[2]
 
+    prev_confirmed = prev[3]
+    next_confirmed = next[3]
+    
+    console.log({prev})
+    console.log({next})
     clearTable('#atableH', '#atableP', '#atitle')
     clearTable('#dtableH', '#dtableP', '#dtitle')
-    createTable(['Date', 'Active', 'Deceased', placename], '#atableH', '#atitle')
-    createTable(['Date', 'Forecasted Active', 'Forecasted Deceased',], '#dtableH', '#dtitle')
-    fillTable([prev_dates, prev_active, prev_deaths], '#atableP')
-    fillTable([next_dates, next_active, next_deaths], '#dtableP')
+    createTable(['Date', 'Active', 'Deceased', 'Confirmed', placename], '#atableH', '#atitle')
+    createTable(['Date', 'Forecasted Active', 'Forecasted Deceased', 'Forecasted Confirmed',], '#dtableH', '#dtitle')
+    fillTable([prev_dates, prev_active, prev_deaths, prev_confirmed], '#atableP')
+    fillTable([next_dates, next_active, next_deaths, next_confirmed], '#dtableP')
     p_len = prev_dates.length
 
+    //Next 3 lines to connect acitve and predicted lines in graph
+    p_len -= 1
+    next_active.unshift(prev_active[p_len]);
+    next_deaths.unshift(prev_deaths[p_len]);
+
+    var max_act = prev_active[p_len]
+    var max_dead = prev_deaths[p_len]
+
     for (i = 0; i < p_len; i++) {
-        if (prev_dates[i] == next_dates[0]) {
-            break;
-        }
         next_active.unshift(null);
         next_deaths.unshift(null);
-    }
-    dates = prev_dates.slice(0, i)
-    dates = dates.concat(next_dates)
 
-    for (; i < dates.length; i++) {
+        if (prev_active[i] > max_act) {
+            max_act = prev_active[i]
+        }
+
+        if (prev_deaths[i] > max_dead) {
+            max_dead = prev_deaths[i]
+        }
+    }
+
+
+    for (i = 0; i < next_dates.length; i++) {
         prev_active.push(null);
         prev_deaths.push(null);
+
+        if (next_active[i] > max_act) {
+            max_act = next_active[i]
+        }
+
+        if (next_deaths[i] > max_dead) {
+            max_act = next_deaths[i]
+        }
     }
-    max_act = scaleYaxis(max_element(prev_active, next_active))
-    max_dead = scaleYaxis(max_element(prev_deaths, next_deaths))
+
+    dates = prev_dates.concat(next_dates)
+
+    max_act = scaleYaxis(max_act)
+    max_dead = scaleYaxis(max_dead)
 
     clearGraph()
     activeChart(placename, dates, prev_active, next_active, max_act)
     deathChart(placename, dates, prev_deaths, next_deaths, max_dead)
-}
 
+}
 // function getStepSize(yaxis_scale) {
 //     if ( yaxis_scale < 19 )
 //     {
@@ -282,7 +269,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
             label: "Active",
             fill: false,
             lineTension: 0.2,
-            borderColor: "blue",
+            borderColor: "orange",
             borderCapStyle: 'square',
             borderJoinStyle: 'miter',
             pointBackgroundColor: "black",
@@ -299,7 +286,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
             label: "Forecast",
             fill: false,
             lineTension: 0.3,
-            borderColor: "orange",
+            borderColor: "blue",
             borderCapStyle: 'square',
             borderJoinStyle: 'miter',
             pointBackgroundColor: "black",
@@ -326,6 +313,7 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
         scales: {
             yAxes: [{
                 ticks: {
+	            fontColor: 'beige',
                     beginAtZero: true,
                     suggestedMax: yaxis_scale,
                     // stepSize: step_size
@@ -334,7 +322,8 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
             }],
             xAxes: [{
                 ticks: {
-                    // autoSkip: false
+		    fontColor: 'beige',
+                    autoSkip: false
                 }
             }]
         },
@@ -344,11 +333,6 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
         },
         layout: {
             padding: 30
-        },
-        tooltips: {
-
-            mode: 'x',
-            intersect : false
         }
     };
 
@@ -362,14 +346,13 @@ function activeChart(place, dates, prev_active, next_active, yaxis_scale) {
 function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
 
 
-
     var canvas = document.getElementById("dchart");
     var ctx = canvas.getContext('2d');
 
     var data = {
         labels: dates,
         datasets: [{
-            label: "Deaths",
+            label: "Deceased",
             fill: false,
             lineTension: 0.2,
             borderColor: "red",
@@ -388,7 +371,7 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
             label: "Forecast",
             fill: false,
             lineTension: 0.3,
-            borderColor: 'rgb(97, 27, 45)',
+            borderColor: 'yellow',
             borderCapStyle: 'square',
             borderJoinStyle: 'miter',
             pointBackgroundColor: "black",
@@ -415,6 +398,7 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
         scales: {
             yAxes: [{
                 ticks: {
+		    fontColor: 'beige',
                     beginAtZero: true,
                     suggestedMax: yaxis_scale,
                     maxTicksLimit: 9
@@ -422,7 +406,8 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
             }],
             xAxes: [{
                 ticks: {
-                    // autoSkip: false
+		    fontColor: 'beige',
+                    autoSkip: false
                 }
             }]
         },
@@ -432,11 +417,6 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
         },
         layout: {
             padding: 30
-        },
-        tooltips: {
-
-            mode: 'x',
-            intersect : false
         }
     };
 
@@ -446,5 +426,3 @@ function deathChart(place, dates, prev_deaths, next_deaths, yaxis_scale) {
         options: options
     });
 }
-
-
